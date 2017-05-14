@@ -1,0 +1,12 @@
+{
+  "name": "chrome-render",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "dependencies": {
+    "chrome-remote-interface": "^0.22.0",
+    "koa": "^2.2.0",
+    "lighthouse": "^1.6.5"
+  }
+}
