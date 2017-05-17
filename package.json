@@ -6,7 +6,11 @@
   },
   "dependencies": {
     "chrome-remote-interface": "^0.22.0",
+    "generic-pool": "^3.1.7",
     "koa": "^2.2.0",
     "lighthouse": "^1.6.5"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.1"
   }
 }

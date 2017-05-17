@@ -16,6 +16,6 @@ send http GET request to `http://localhost:3000`, support query params:
 - ready: is an option param. if it's not set chrome will return page html on `domContentEventFired`, else will waiting util `console.log(ready)` was call in page.
 
 ## Dependencies
-1. depend on [Chrome Canary](https://www.google.com/chrome/browser/canary.html)
+1. depend on [Chrome Canary](https://www.google.com/chrome/browser/canary.html) now
 2. Nodejs 7+
  
