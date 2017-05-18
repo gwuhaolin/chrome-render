@@ -23,7 +23,7 @@ see more demo in [unit test](./test/render.test.js)
 
 #### `ChromeRender.new()` method support options:
 - `maxTab`: `number` max tab chrome will open to render pages, default is no limit 
-- `renderTimeout`: `number` in ms, `chromeRender.render()` will throw error if html string can't be resolved after `renderTimeout`,default is 3000ms
+- `renderTimeout`: `number` in ms, `chromeRender.render()` will throw error if html string can't be resolved after `renderTimeout`,default is 5000ms
 
 #### `chromeRender.render()` method support options:
 - `url`: `string` is required, web page's URL 
