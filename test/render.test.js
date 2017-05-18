@@ -39,13 +39,13 @@ describe('#ChromeRender', function () {
     console.log(html);
   });
 
-  it('#render() set ready', async () => {
-    const html = await chromeRender.render({
-      url: 'http://qq.com',
-      ready: 'flag-page-ready'
-    });
-    console.log(html);
-  });
+  // it('#render() set ready', async () => {
+  //   const html = await chromeRender.render({
+  //     url: 'http://qq.com',
+  //     ready: 'flag-page-ready'
+  //   });
+  //   console.log(html);
+  // });
 
   it('#render() render multi pages sames time', async () => {
     const tasks = [];

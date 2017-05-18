@@ -42,7 +42,7 @@ describe('#ChromeTabsPoll', function () {
   it('#require() #release()', async () => {
     const client = await chromeTabsPoll.require();
     assert.equal(chromeTabsPoll.tabs[client.tabId].free, false, 'after require tab should be busy');
-    chromeTabsPoll.release(client.tabId);
+    await chromeTabsPoll.release(client.tabId);
     assert.equal(chromeTabsPoll.tabs[client.tabId].free, true, 'after release tab should be free');
   });
 
