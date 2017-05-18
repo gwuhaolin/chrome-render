@@ -11,7 +11,7 @@ describe('#ChromeTabsPoll', function () {
   });
 
   afterEach(async () => {
-    await chromeTabsPoll.destroy();
+    await chromeTabsPoll.destroyPoll();
   });
 
   it('#createTab()', async () => {
@@ -36,7 +36,7 @@ describe('#ChromeTabsPoll', function () {
   //   const tabId = await chromeTabsPoll.createTab();
   //   const client = await chromeTabsPoll.connectTab(tabId);
   //   assert.equal(client.tabId, tabId, 'connect to an exited tab should has same tabId');
-  //   await chromeTabsPoll.destroy();
+  //   await chromeTabsPoll.destroyPoll();
   // });
 
   it('#require() #release()', async () => {
