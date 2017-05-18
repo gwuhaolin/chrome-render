@@ -3,6 +3,7 @@ const ChromeTabsPoll = require('../lib/poll');
 const assert = require('assert');
 
 describe('#ChromeTabsPoll', function () {
+  this.timeout(20000);
   let chromeTabsPoll;
 
   beforeEach(async () => {
@@ -19,13 +20,14 @@ describe('#ChromeTabsPoll', function () {
 
   it('#create() set maxTab', async () => {
     const maxTab = 2;
-    const chromeTabsPoll = await ChromeTabsPoll.new(maxTab);
+    let chromeTabsPoll = await ChromeTabsPoll.new(maxTab);
     assert.equal(chromeTabsPoll.maxTab, maxTab);
     const client1 = await chromeTabsPoll.require();
-    const client2 = await chromeTabsPoll.require();
+    await chromeTabsPoll.require();
+    console.log(`2 tabs has created, next require will return util release has be released after 5s`);
     setTimeout(() => {
       chromeTabsPoll.release(client1.tabId);
-    }, 1000);
+    }, 5000);
     return await chromeTabsPoll.require();
   });
 
