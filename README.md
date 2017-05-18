@@ -19,6 +19,7 @@ ChromeRender.new({}).then(async(chromeRender)=>{
     });
 });    
 ```
+see more demo in [unit test](./test/render.test.js)
 
 #### `ChromeRender.new()` method support options:
 - `maxTab`: `number` max tab chrome will open to render pages, default is no limit 

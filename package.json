@@ -11,14 +11,13 @@
     "vue"
   ],
   "scripts": {
-    "demo": "node ./demo/index.js"
+    "test": "mocha ./test"
   },
   "dependencies": {
     "chrome-remote-interface": "^0.22.0",
     "lighthouse": "^1.6.5"
   },
   "devDependencies": {
-    "koa": "^2.2.0",
     "mocha": "^3.4.1"
   }
 }
