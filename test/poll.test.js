@@ -14,11 +14,11 @@ describe('#ChromeTabsPoll', function () {
     await chromeTabsPoll.destroy();
   });
 
-  it('#create()', async () => {
-    return await chromeTabsPoll.create();
+  it('#createTab()', async () => {
+    return await chromeTabsPoll.createTab();
   });
 
-  it('#create() set maxTab', async () => {
+  it('#createTab() set maxTab', async () => {
     const maxTab = 2;
     let chromeTabsPoll = await ChromeTabsPoll.new(maxTab);
     assert.equal(chromeTabsPoll.maxTab, maxTab);
@@ -33,7 +33,7 @@ describe('#ChromeTabsPoll', function () {
 
   // it('#connectTab()', async () => {
   //   const chromeTabsPoll = await ChromeTabsPoll.new();
-  //   const tabId = await chromeTabsPoll.create();
+  //   const tabId = await chromeTabsPoll.createTab();
   //   const client = await chromeTabsPoll.connectTab(tabId);
   //   assert.equal(client.tabId, tabId, 'connect to an exited tab should has same tabId');
   //   await chromeTabsPoll.destroy();
