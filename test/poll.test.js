@@ -17,6 +17,18 @@ describe('#ChromeTabsPoll', function () {
     return await chromeTabsPoll.create();
   });
 
+  it('#create() set maxTab', async () => {
+    const maxTab = 2;
+    const chromeTabsPoll = await ChromeTabsPoll.new(maxTab);
+    assert.equal(chromeTabsPoll.maxTab, maxTab);
+    const client1 = await chromeTabsPoll.require();
+    const client2 = await chromeTabsPoll.require();
+    setTimeout(() => {
+      chromeTabsPoll.release(client1.tabId);
+    }, 1000);
+    return await chromeTabsPoll.require();
+  });
+
   // it('#connect()', async () => {
   //   const chromeTabsPoll = await ChromeTabsPoll.new();
   //   const tabId = await chromeTabsPoll.create();
