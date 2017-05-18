@@ -11,7 +11,7 @@ describe('#ChromeRender', function () {
   });
 
   afterEach(async () => {
-    await chromeRender.destroy();
+    await chromeRender.destroyRender();
   });
 
   it('#render()', async () => {
