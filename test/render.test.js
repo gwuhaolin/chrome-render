@@ -1,22 +1,27 @@
 'use strict';
-const ChromeRender = require('../index');
+const ChromeRender = require('../lib/render');
 
-describe('ChromeRender', function () {
+describe('#ChromeRender', function () {
   this.timeout(10000);
 
+  let chromeRender;
+
+  beforeEach(async () => {
+    chromeRender = await ChromeRender.new();
+  });
+
+  afterEach(async () => {
+    await chromeRender.destroy();
+  });
+
   it('#render()', async () => {
-    const chromeRender = new ChromeRender();
-    await chromeRender.init();
     const html = await chromeRender.render({
       url: 'http://qq.com',
     });
     console.log(html);
-    await chromeRender.destroy();
   });
 
   it('#render() set cookies', async () => {
-    const chromeRender = new ChromeRender();
-    await chromeRender.init();
     const html = await chromeRender.render({
       url: 'http://qq.com',
       cookies: {
@@ -24,34 +29,25 @@ describe('ChromeRender', function () {
       },
     });
     console.log(html);
-    await chromeRender.destroy();
   });
 
   it('#render() set referrer', async () => {
-    const chromeRender = new ChromeRender();
-    await chromeRender.init();
     const html = await chromeRender.render({
       url: 'http://qq.com',
       referrer: 'http://google.com'
     });
     console.log(html);
-    await chromeRender.destroy();
   });
 
   it('#render() set ready', async () => {
-    const chromeRender = new ChromeRender();
-    await chromeRender.init();
     const html = await chromeRender.render({
       url: 'http://qq.com',
       ready: 'flag-page-ready'
     });
     console.log(html);
-    await chromeRender.destroy();
   });
 
   it('#render() render multi pages sames time', async () => {
-    const chromeRender = new ChromeRender();
-    await chromeRender.init();
     const tasks = [];
     [
       'http://qq.com',
@@ -76,7 +72,6 @@ describe('ChromeRender', function () {
     });
     const htmls = await Promise.all(tasks);
     htmls.forEach(console.log);
-    await chromeRender.destroy();
   });
 
 });

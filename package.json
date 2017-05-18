@@ -1,16 +1,24 @@
 {
   "name": "chrome-render",
   "version": "0.0.1",
+  "description": "General server render base on chrome",
+  "keywords": [
+    "headless",
+    "chrome",
+    "server",
+    "render",
+    "react",
+    "vue"
+  ],
   "scripts": {
-    "start": "node ./index.js"
+    "demo": "node ./demo/index.js"
   },
   "dependencies": {
     "chrome-remote-interface": "^0.22.0",
-    "generic-pool": "^3.1.7",
-    "koa": "^2.2.0",
     "lighthouse": "^1.6.5"
   },
   "devDependencies": {
+    "koa": "^2.2.0",
     "mocha": "^3.4.1"
   }
 }

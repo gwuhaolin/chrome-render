@@ -1,25 +1,35 @@
 'use strict';
 const ChromeTabsPoll = require('../lib/poll');
+const assert = require('assert');
 
 describe('#ChromeTabsPoll', function () {
+  let chromeTabsPoll;
 
-  it('#init()', async () => {
-    const chromeTabsPoll = new ChromeTabsPoll();
-    await chromeTabsPoll.init();
+  beforeEach(async () => {
+    chromeTabsPoll = await ChromeTabsPoll.new();
+  });
+
+  afterEach(async () => {
+    await chromeTabsPoll.destroy();
   });
 
   it('#create()', async () => {
-    const chromeTabsPoll = new ChromeTabsPoll();
-    await chromeTabsPoll.init();
-    await chromeTabsPoll.create();
+    return await chromeTabsPoll.create();
   });
 
-  it('#require() release()', async () => {
-    const chromeTabsPoll = new ChromeTabsPoll();
-    await chromeTabsPoll.init();
+  // it('#connect()', async () => {
+  //   const chromeTabsPoll = await ChromeTabsPoll.new();
+  //   const tabId = await chromeTabsPoll.create();
+  //   const client = await chromeTabsPoll.connect(tabId);
+  //   assert.equal(client.tabId, tabId, 'connect to an exited tab should has same tabId');
+  //   await chromeTabsPoll.destroy();
+  // });
+
+  it('#require() #release()', async () => {
     const client = await chromeTabsPoll.require();
+    assert.equal(chromeTabsPoll.tabs[client.tabId].free, false, 'after require tab should be busy');
     chromeTabsPoll.release(client.tabId);
-    await chromeTabsPoll.destory();
+    assert.equal(chromeTabsPoll.tabs[client.tabId].free, true, 'after release tab should be free');
   });
 
-})
+});

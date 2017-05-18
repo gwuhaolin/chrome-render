@@ -2,9 +2,9 @@
 const Koa = require('koa');
 const app = new Koa();
 const ChromeRender = require('../index');
-const render = new ChromeRender();
+let chromeRender;
 
-// 错误处理
+// error handle
 app.use(async (ctx, next) => {
   try {
     await next();
@@ -18,8 +18,11 @@ app.use(async (ctx) => {
   const { request, response } = ctx;
   const query = request.query;
   const start = new Date();
-  response.body = await render.render(query);
+  response.body = await chromeRender.render(query);
   response.set('X-Render-Time', Date.now() - start);
 });
 
-app.listen(3000);
+(async () => {
+  chromeRender = await ChromeRender.new();
+  app.listen(3000);
+})();
