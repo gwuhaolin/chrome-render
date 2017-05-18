@@ -29,6 +29,13 @@ ChromeRender.new({}).then(async(chromeRender)=>{
 - `referrer`: `string` set HTTP referrer header when request web page
 - `cookies`: `object {cookieName:cookieValue}` set HTTP cookies when request web page
 - `ready`: `string` is an option param. if it's not set chrome will return page html on dom event `domContentEventFired`, else will waiting util js in web page call `console.log(ready's value)`
+
+## Performce
+`ChromeRender` will create a tab poll to reuse tab for performce improve and resource reduce as open and close tab in chrome require time.
+TODO
+
+## Resource use
+TODO
  
 ## Dependencies
 1. depend on [Chrome Canary](https://www.google.com/chrome/browser/canary.html) now
