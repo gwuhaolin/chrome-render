@@ -31,10 +31,10 @@ describe('#ChromeTabsPoll', function () {
     return await chromeTabsPoll.require();
   });
 
-  // it('#connect()', async () => {
+  // it('#connectTab()', async () => {
   //   const chromeTabsPoll = await ChromeTabsPoll.new();
   //   const tabId = await chromeTabsPoll.create();
-  //   const client = await chromeTabsPoll.connect(tabId);
+  //   const client = await chromeTabsPoll.connectTab(tabId);
   //   assert.equal(client.tabId, tabId, 'connect to an exited tab should has same tabId');
   //   await chromeTabsPoll.destroy();
   // });
