@@ -1,20 +1,35 @@
+[![Npm Package](https://img.shields.io/npm/v/chrome-render.svg?style=flat-square)](https://www.npmjs.com/package/chrome-render)
+[![Npm Downloads](http://img.shields.io/npm/dm/chrome-render.svg?style=flat-square)](https://www.npmjs.com/package/chrome-render)
+[![Dependency Status](https://david-dm.org/gwuhaolin/chrome-render.svg?style=flat-square)](https://npmjs.org/package/chrome-render)
+
 # General server render base on chrome
 Render any web page render data in browser in server for SEO or other optimizes. 
 Base on awesome [Headless chrome](https://www.chromestatus.com/feature/5678767817097216).
 
 ## Use
-#### start render server:
-1. git clone this project, 
-2. cd to project dir,
-3. run `node index.js`
+1. install it from npm by `npm i chrome-render`
+2. init a ChromeRender then use `chromeRender` to render a web page
+```js
+const ChromeRender = require('chrome-render');
+// ChromeRender.new() return a Promise, you can use async function in this way:
+// const chromeRender = await ChromeRender.new(); 
+ChromeRender.new({}).then(async(chromeRender)=>{
+    const htmlString = await chromeRender.render({
+       url: 'http://qq.com',
+    });
+});    
+```
 
-#### request service:
-send http GET request to `http://localhost:3000`, support query params:
-- url: target page's url, required
-- cookies: inject cookies when request page, is a json in format `{"cookie name":"cookie value"}`
-- referrer: inject HTTP referrer header when request page.
-- ready: is an option param. if it's not set chrome will return page html on `domContentEventFired`, else will waiting util `console.log(ready)` was call in page.
+#### `ChromeRender.new()` method support options:
+- `maxTab`: `number` max tab chrome will open to render pages, default is no limit 
+- `renderTimeout`: `number` in ms, `chromeRender.render()` will throw error if html string can't be resolved after `renderTimeout`,default is 3000ms
 
+#### `chromeRender.render()` method support options:
+- `url`: `string` is required, web page's URL 
+- `referrer`: `string` set HTTP referrer header when request web page
+- `cookies`: `object {cookieName:cookieValue}` set HTTP cookies when request web page
+- `ready`: `string` is an option param. if it's not set chrome will return page html on dom event `domContentEventFired`, else will waiting util js in web page call `console.log(ready's value)`
+ 
 ## Dependencies
 1. depend on [Chrome Canary](https://www.google.com/chrome/browser/canary.html) now
 2. Nodejs 7+
