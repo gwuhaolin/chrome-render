@@ -22,7 +22,7 @@ describe('#util.js', function () {
 
   it('#launcherChrome()', async () => {
     const freePort = await util.sysFreePort();
-    const launcher = await util.launcherChrome(freePort);
+    const launcher = await util.launchChrome(freePort);
     assert.equal(launcher.port, freePort, 'chrome should run');
     await launcher.kill();
   });
