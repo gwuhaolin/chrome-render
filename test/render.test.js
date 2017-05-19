@@ -15,28 +15,25 @@ describe('#ChromeRender', function () {
   });
 
   it('#render()', async () => {
-    const html = await chromeRender.render({
+    return await chromeRender.render({
       url: 'http://qq.com',
     });
-    console.log(html);
   });
 
   it('#render() set cookies', async () => {
-    const html = await chromeRender.render({
+    return await chromeRender.render({
       url: 'http://qq.com',
       cookies: {
         'token': 'token value'
       },
     });
-    console.log(html);
   });
 
   it('#render() set referrer', async () => {
-    const html = await chromeRender.render({
+    return await chromeRender.render({
       url: 'http://qq.com',
       referrer: 'http://google.com'
     });
-    console.log(html);
   });
 
   // it('#render() set ready', async () => {
@@ -70,8 +67,7 @@ describe('#ChromeRender', function () {
     ].forEach(url => {
       tasks.push(chromeRender.render({ url }));
     });
-    const htmls = await Promise.all(tasks);
-    htmls.forEach(console.log);
+    return await Promise.all(tasks);
   });
 
 });
