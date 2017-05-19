@@ -1,4 +1,5 @@
 'use strict';
+const assert = require('assert');
 const ChromeRender = require('../lib/render');
 
 describe('#ChromeRender', function () {
@@ -34,6 +35,17 @@ describe('#ChromeRender', function () {
       url: 'http://qq.com',
       referrer: 'http://google.com'
     });
+  });
+
+  it('#render() cant load', async () => {
+    try {
+      await chromeRender.render({
+        url: 'http://thispage.cantload.com',
+      });
+    } catch (err) {
+      assert.equal(err.message, 'network loading failed');
+      return Promise.resolve(err);
+    }
   });
 
   // it('#render() set ready', async () => {
