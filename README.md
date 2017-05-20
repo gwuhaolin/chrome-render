@@ -1,6 +1,7 @@
 [![Npm Package](https://img.shields.io/npm/v/chrome-render.svg?style=flat-square)](https://www.npmjs.com/package/chrome-render)
 [![Npm Downloads](http://img.shields.io/npm/dm/chrome-render.svg?style=flat-square)](https://www.npmjs.com/package/chrome-render)
 [![Dependency Status](https://david-dm.org/gwuhaolin/chrome-render.svg?style=flat-square)](https://npmjs.org/package/chrome-render)
+[![Build Status](https://img.shields.io/travis/gwuhaolin/chrome-render.svg?style=flat-square)](https://travis-ci.org/gwuhaolin/chrome-render)
 
 # General server render base on chrome
 Render any web page render data in browser in server for SEO or other optimizes. 
