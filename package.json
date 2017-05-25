@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "chrome-remote-interface": "^0.22.0",
-    "lighthouse": "^1.6.5"
+    "lighthouse": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^3.4.1"
+    "mocha": "^3.4.2"
   }
 }
