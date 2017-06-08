@@ -3,7 +3,7 @@ const assert = require('assert');
 const ChromeRender = require('../lib/render');
 
 describe('#ChromeRender', function () {
-  this.timeout(10000);
+  this.timeout(100000);
 
   let chromeRender;
 
@@ -70,12 +70,6 @@ describe('#ChromeRender', function () {
       'http://sports.qq.com',
       'http://auto.qq.com',
       'https://jd.com',
-      'https://google.com',
-      'https://github.com',
-      'https://apple.com',
-      'https://twitter.com',
-      'https://facebook.com',
-      'https://bing.com',
     ].forEach(url => {
       tasks.push(chromeRender.render({ url }));
     });
