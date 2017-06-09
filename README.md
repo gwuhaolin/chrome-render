@@ -32,6 +32,9 @@ see more demo in [unit test](./test/render.test.js)
 - `ready`: `string` is an option param. if it's omitted chrome will return page html on dom event `domContentEventFired`, else will waiting util js in web page call `console.log(${ready's value})`. et `ready=_ready_flag` when web page is ready call `console.log('_ready_flag')`.
 - `script`: `string` is an option param. inject script source to evaluate when page on load
 
+## Friends
+- [koa-seo](https://github.com/gwuhaolin/koa-seo) SEO middleware for koa base on [chrome-render](https://github.com/gwuhaolin/chrome-render).
+
 ## Dependencies
 1. depend on [Chrome Canary](https://www.google.com/chrome/browser/canary.html) now
 2. Nodejs 7+
