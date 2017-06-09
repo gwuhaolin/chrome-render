@@ -10,6 +10,11 @@
     "react",
     "vue"
   ],
+  "author": "gwuhaolin",
+  "engines": {
+    "node": ">= 7.0.0"
+  },
+  "main": "index.js",
   "scripts": {
     "test": "mocha ./test"
   },
