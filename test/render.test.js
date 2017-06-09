@@ -8,22 +8,24 @@ describe('#ChromeRender', function () {
   let chromeRender;
 
   beforeEach(async () => {
+    // start a chrome
     chromeRender = await ChromeRender.new();
   });
 
   afterEach(async () => {
+    // close all tab and exit chrome
     await chromeRender.destroyRender();
   });
 
   it('#render()', async () => {
     return await chromeRender.render({
-      url: 'http://qq.com',
+      url: 'https://gwuhaolin.github.io/redemo/',
     });
   });
 
   it('#render() set cookies', async () => {
     return await chromeRender.render({
-      url: 'http://qq.com',
+      url: 'https://gwuhaolin.github.io/reflv/',
       cookies: {
         'token': 'token value'
       },
@@ -48,13 +50,21 @@ describe('#ChromeRender', function () {
     }
   });
 
-  // it('#render() set ready', async () => {
-  //   const html = await chromeRender.render({
-  //     url: 'http://qq.com',
-  //     ready: 'flag-page-ready'
-  //   });
-  //   console.log(html);
-  // });
+  it('#render() set ready', async () => {
+    const html = await chromeRender.render({
+      url: 'http://qq.com',
+      ready: '_ready_flag'
+    });
+    console.log(html);
+  });
+
+  it('#render() inject script', async () => {
+    const html = await chromeRender.render({
+      url: 'https://gwuhaolin.github.io/remd/',
+      script: `window.alert(document.title);`,
+    });
+    console.log(html);
+  });
 
   it('#render() render multi pages sames time', async () => {
     const tasks = [];
