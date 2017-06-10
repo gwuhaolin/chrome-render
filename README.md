@@ -35,7 +35,7 @@ see more demo in [unit test](./test/render.test.js)
 all request from chrome-render will take with a HTTP header `X-Chrome-Render:${version}`
 
 ## Friends
-- [koa-chrome-render](https://github.com/gwuhaolin/koa-chrome-render) [chrome-render](https://github.com/gwuhaolin/chrome-render) middleware for koa.
+- [koa-chrome-render](https://github.com/gwuhaolin/koa-chrome-render) chrome-render middleware for koa.
 - [koa-seo](https://github.com/gwuhaolin/koa-seo) SEO middleware for koa base on [chrome-render](https://github.com/gwuhaolin/chrome-render) substitute for [prerender](https://prerender.io).
 
 ## Dependencies
