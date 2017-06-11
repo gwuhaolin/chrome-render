@@ -39,6 +39,6 @@ all request from chrome-render will take with a HTTP header `X-Chrome-Render:${v
 - [koa-seo](https://github.com/gwuhaolin/koa-seo) SEO middleware for koa base on [chrome-render](https://github.com/gwuhaolin/chrome-render) substitute for [prerender](https://prerender.io).
 
 ## Dependencies
-1. [Chrome](https://www.google.com/chrome/browser/desktop/index.html) should install on you system
+1. [Chrome 59+](https://www.google.com/chrome/browser/desktop/index.html) should install on you system
 2. Nodejs 7+
  
