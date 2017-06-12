@@ -1,6 +1,6 @@
 {
   "name": "chrome-render",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "General server render base on chrome",
   "keywords": [
     "headless",

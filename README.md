@@ -27,8 +27,8 @@ see more demo in [unit test](./test/render.test.js)
 
 #### `chromeRender.render()` method support options:
 - `url`: `string` is required, web page's URL 
-- `referrer`: `string` set HTTP referrer header when request web page
-- `cookies`: `object {cookieName:cookieValue}` set HTTP cookies when request web page
+- `cookies`: `object {cookieName:cookieValue}` is an option param. set HTTP cookies when request web page
+- `headers`: `object {headerName:headerValue}` is an option param. add HTTP headers when request web page
 - `ready`: `string` is an option param. if it's omitted chrome will return page html on dom event `domContentEventFired`, else will waiting util js in web page call `console.log(${ready's value})`. et `ready=_ready_flag` when web page is ready call `console.log('_ready_flag')`.
 - `script`: `string` is an option param. inject script source to evaluate when page on load
 
