@@ -34,12 +34,12 @@ see more demo in [unit test](./index.test.js)
 
 all request from chrome-render will take with a HTTP header `X-Chrome-Render:${version}`
 
+## Dependencies
+1. [Chrome 59+](https://www.google.com/chrome/browser/desktop/index.html) should install on you system
+2. Nodejs 7+
+ 
 ## Friends
 - [koa-chrome-render](https://github.com/gwuhaolin/koa-chrome-render) chrome-render middleware for koa.
 - [koa-seo](https://github.com/gwuhaolin/koa-seo) SEO middleware for koa base on [chrome-render](https://github.com/gwuhaolin/chrome-render) substitute for [prerender](https://prerender.io).
 - [chrome-pool](https://github.com/gwuhaolin/chrome-pool) Headless chrome tabs manage pool.
-
-## Dependencies
-1. [Chrome 59+](https://www.google.com/chrome/browser/desktop/index.html) should install on you system
-2. Nodejs 7+
  
