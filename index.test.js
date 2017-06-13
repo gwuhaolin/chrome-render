@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const ChromeRender = require('../lib/render');
+const ChromeRender = require('./index');
 
 describe('#ChromeRender', function () {
   this.timeout(100000);

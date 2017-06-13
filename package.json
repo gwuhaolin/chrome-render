@@ -1,6 +1,6 @@
 {
   "name": "chrome-render",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "General server render base on chrome",
   "keywords": [
     "headless",
@@ -16,11 +16,10 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test"
+    "test": "mocha"
   },
   "dependencies": {
-    "chrome-remote-interface": "^0.23.2",
-    "lighthouse": "^2.1.0"
+    "chrome-pool": "0.0.1"
   },
   "devDependencies": {
     "mocha": "^3.4.2"

@@ -19,7 +19,7 @@ ChromeRender.new({}).then(async(chromeRender)=>{
     });
 });    
 ```
-see more demo in [unit test](./test/render.test.js)
+see more demo in [unit test](./index.test.js)
 
 #### `ChromeRender.new()` method support options:
 - `maxTab`: `number` max tab chrome will open to render pages, default is no limit, `maxTab` used to avoid open to many tab lead to chrome crash. `ChromeRender` will create a tab poll to reuse tab for performance improve and resource reduce as open and close tab in chrome require time, like database connection poll. 
@@ -37,6 +37,7 @@ all request from chrome-render will take with a HTTP header `X-Chrome-Render:${v
 ## Friends
 - [koa-chrome-render](https://github.com/gwuhaolin/koa-chrome-render) chrome-render middleware for koa.
 - [koa-seo](https://github.com/gwuhaolin/koa-seo) SEO middleware for koa base on [chrome-render](https://github.com/gwuhaolin/chrome-render) substitute for [prerender](https://prerender.io).
+- [chrome-pool](https://github.com/gwuhaolin/chrome-pool) Headless chrome tabs manage pool.
 
 ## Dependencies
 1. [Chrome 59+](https://www.google.com/chrome/browser/desktop/index.html) should install on you system
