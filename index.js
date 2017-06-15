@@ -3,8 +3,8 @@ const ChromePoll = require('chrome-pool');
 const package_json = require('./package.json');
 
 const ERR_REQUIRE_URL = new Error('url param is required', 1);
-const ERR_RENDER_TIMEOUT = new Error('chrome-render timeout', 1);
-const ERR_NETWORK_LOADING_FAILED = new Error('network loading failed', 2);
+const ERR_RENDER_TIMEOUT = new Error('chrome-render timeout', 2);
+const ERR_NETWORK_LOADING_FAILED = new Error('network loading failed', 3);
 
 /**
  * a ChromeRender will launch a chrome with some tabs to render web pages.
