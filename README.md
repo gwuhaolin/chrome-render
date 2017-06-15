@@ -29,10 +29,10 @@ see more demo in [unit test](./index.test.js)
 - `url`: `string` is required, web page's URL 
 - `cookies`: `object {cookieName:cookieValue}` is an option param. set HTTP cookies when request web page
 - `headers`: `object {headerName:headerValue}` is an option param. add HTTP headers when request web page
-- `ready`: `string` is an option param. if it's omitted chrome will return page html on dom event `domContentEventFired`, else will waiting util js in web page call `console.log(${ready's value})`. et `ready=_ready_flag` when web page is ready call `console.log('_ready_flag')`.
+- `useReady`: `boolean` whether use `window.chromeRenderReady()` to notify chrome-render page has ready. default is false chrome-render use `domContentEventFired` as page has ready.
 - `script`: `string` is an option param. inject script source to evaluate when page on load
 
-all request from chrome-render will take with a HTTP header `X-Chrome-Render:${version}`
+all request from chrome-render will take with a HTTP header `x-chrome-render:${version}`
  
 ## Friends
 - chrome-render dependent on [chrome-pool](https://github.com/gwuhaolin/chrome-pool) Headless chrome tabs manage pool.

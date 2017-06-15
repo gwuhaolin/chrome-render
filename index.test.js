@@ -50,10 +50,10 @@ describe('#ChromeRender', function () {
     }
   });
 
-  it.skip('#render() set ready', async () => {
+  it('#render() use ready', async () => {
     const html = await chromeRender.render({
-      url: 'http://qq.com',
-      ready: '_ready_flag'
+      url: 'http://localhost:3000',
+      useReady: true,
     });
     console.log(html);
   });
