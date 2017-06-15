@@ -23,7 +23,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "chrome-pool": "^1.0.0"
+    "chrome-pool": "^1.0.3"
   },
   "devDependencies": {
     "mocha": "^3.4.2"

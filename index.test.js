@@ -50,7 +50,7 @@ describe('#ChromeRender', function () {
     }
   });
 
-  it('#render() set ready', async () => {
+  it.skip('#render() set ready', async () => {
     const html = await chromeRender.render({
       url: 'http://qq.com',
       ready: '_ready_flag'

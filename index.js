@@ -77,8 +77,7 @@ class ChromeRender {
       };
 
       // inject cookies
-      if (typeof cookies === 'string') {
-        cookies = JSON.parse(cookies);
+      if (cookies && typeof cookies === 'object') {
         Object.keys(cookies).forEach((name) => {
           Network.setCookie({
             url: url,
