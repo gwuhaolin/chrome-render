@@ -3,8 +3,8 @@
 [![Npm Downloads](http://img.shields.io/npm/dm/chrome-render.svg?style=flat-square)](https://www.npmjs.com/package/chrome-render)
 [![Dependency Status](https://david-dm.org/gwuhaolin/chrome-render.svg?style=flat-square)](https://npmjs.org/package/chrome-render)
 
-# General server render base on chrome
-Render any web page render data in browser in server for SEO or other optimizes. 
+# chrome-render
+General server render base on chrome, render any web page render data in browser in server for SEO or other optimizes. 
 Base on awesome [Headless chrome](https://www.chromestatus.com/feature/5678767817097216).
 
 ## Use
