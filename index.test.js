@@ -94,11 +94,8 @@ describe('#ChromeRender', function () {
     const tasks = [];
     [
       'https://github.com',
-      'https://taobao.com',
       'https://www.alibaba.com',
       'https://bing.com',
-      'http://facebook.com',
-      'http://twitter.com',
     ].forEach(url => {
       tasks.push(chromeRender.render({ url }));
     });
