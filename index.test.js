@@ -29,8 +29,8 @@ describe('#ChromeRender', function () {
   it('#render() set referrer', async function () {
     const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({
-      url: 'http://qq.com',
-      referrer: 'http://google.com'
+      url: 'http://google.com',
+      referrer: 'http://baidu.com'
     });
     // console.log(html);
     await chromeRender.destroyRender();
@@ -84,7 +84,7 @@ describe('#ChromeRender', function () {
       useReady: true,
       script: `window.chromeRenderReady && window.chromeRenderReady();`,
     });
-    console.log(html);
+    // console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -93,16 +93,12 @@ describe('#ChromeRender', function () {
     const chromeRender = await ChromeRender.new();
     const tasks = [];
     [
-      'http://qq.com',
-      'https://baidu.com',
+      'https://github.com',
       'https://taobao.com',
-      'https://tmall.com',
-      'https://ke.qq.com',
-      'http://tech.qq.com',
-      'http://games.qq.com',
-      'http://sports.qq.com',
-      'http://auto.qq.com',
-      'https://jd.com',
+      'https://www.alibaba.com',
+      'https://bing.com',
+      'http://facebook.com',
+      'http://twitter.com',
     ].forEach(url => {
       tasks.push(chromeRender.render({ url }));
     });
