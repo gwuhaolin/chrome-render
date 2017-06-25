@@ -10,7 +10,7 @@ describe('#ChromeRender', function () {
     const html = await chromeRender.render({
       url: 'https://gwuhaolin.github.io/redemo/',
     });
-    console.log(html);
+    // console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -22,7 +22,7 @@ describe('#ChromeRender', function () {
         'token': 'token value'
       },
     });
-    console.log(html);
+    // console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -32,7 +32,7 @@ describe('#ChromeRender', function () {
       url: 'http://qq.com',
       referrer: 'http://google.com'
     });
-    console.log(html);
+    // console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -73,7 +73,7 @@ describe('#ChromeRender', function () {
       url: 'https://gwuhaolin.github.io/reflv/live.html',
       useReady: true,
     });
-    console.log(html);
+    // console.log(html);
     await chromeRender.destroyRender();
   });
 
