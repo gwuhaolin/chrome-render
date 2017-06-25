@@ -1,4 +1,5 @@
 [![Npm Package](https://img.shields.io/npm/v/chrome-render.svg?style=flat-square)](https://www.npmjs.com/package/chrome-render)
+[![Build Status](https://img.shields.io/travis/gwuhaolin/chrome-render.svg?style=flat-square)](https://travis-ci.org/gwuhaolin/chrome-render)
 [![Npm Downloads](http://img.shields.io/npm/dm/chrome-render.svg?style=flat-square)](https://www.npmjs.com/package/chrome-render)
 [![Dependency Status](https://david-dm.org/gwuhaolin/chrome-render.svg?style=flat-square)](https://npmjs.org/package/chrome-render)
 
@@ -23,7 +24,6 @@ see more demo in [unit test](./index.test.js)
 
 #### `ChromeRender.new()` method support options:
 - `maxTab`: `number` max tab chrome will open to render pages, default is no limit, `maxTab` used to avoid open to many tab lead to chrome crash. `ChromeRender` will create a tab poll to reuse tab for performance improve and resource reduce as open and close tab in chrome require time, like database connection poll. 
-- `renderTimeout`: `number` in ms, `chromeRender.render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
 
 #### `chromeRender.render()` method support options:
 - `url`: `string` is required, web page's URL 
@@ -31,6 +31,7 @@ see more demo in [unit test](./index.test.js)
 - `headers`: `object {headerName:headerValue}` is an option param. add HTTP headers when request web page
 - `useReady`: `boolean` whether use `window.chromeRenderReady()` to notify chrome-render page has ready. default is false chrome-render use `domContentEventFired` as page has ready.
 - `script`: `string` is an option param. inject script source to evaluate when page on load
+- `renderTimeout`: `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
 
 all request from chrome-render will take with a HTTP header `x-chrome-render:${version}`
  

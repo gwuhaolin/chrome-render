@@ -4,7 +4,7 @@ const package_json = require('./package.json');
 
 const ERR_REQUIRE_URL = new Error('url param is required', 1);
 const ERR_RENDER_TIMEOUT = new Error('chrome-render timeout', 2);
-const ERR_NETWORK_LOADING_FAILED = new Error('network loading failed', 3);
+const ERR_PAGE_LOAD_FAILED = new Error('page load failed', 3);
 
 /**
  * a ChromeRender will launch a chrome with some tabs to render web pages.
@@ -18,18 +18,17 @@ class ChromeRender {
    * @param {object} params
    * {
    *  maxTab: `number` max tab chrome will open to render pages, default is no limit, `maxTab` used to avoid open to many tab lead to chrome crash.
-   *  renderTimeout: `number` in ms, `chromeRender.render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
+   *
    * }
    * @return {Promise.<ChromeRender>}
    */
   static async new(params = {}) {
-    const { maxTab, renderTimeout = 5000 } = params;
+    const { maxTab} = params;
     const chromeRender = new ChromeRender();
     chromeRender.chromePoll = await ChromePoll.new({
       maxTab,
-      protocols: ['Page', 'DOM', 'Runtime', 'Network'],
+      protocols: ['Page', 'DOM', 'Network', 'Console'],
     });
-    chromeRender.renderTimeout = renderTimeout;
     return chromeRender;
   }
 
@@ -42,6 +41,7 @@ class ChromeRender {
    *      headers: `object {headerName:headerValue}` add HTTP headers when request web page
    *      useReady: `boolean` whether use `window.chromeRenderReady()` to notify chrome-render page has ready. default is false chrome-render use `domContentEventFired` as page has ready.
    *      script: inject script to evaluate when page on load
+   *      renderTimeout: `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
    * }
    * @returns {Promise.<string>} page html string
    */
@@ -50,7 +50,7 @@ class ChromeRender {
     return await new Promise(async (resolve, reject) => {
       let hasFailed = false;
       let timer;
-      let { url, cookies, headers = {}, useReady, script } = params;
+      let { url, cookies, headers = {}, useReady, script, renderTimeout = 5000 } = params;
 
 
       // params assert
@@ -63,8 +63,13 @@ class ChromeRender {
 
       // open a tab
       client = await this.chromePoll.require();
-      const { Page, DOM, Runtime, Network, } = client.protocol;
+      const { Page, DOM, Console, Network, } = client.protocol;
 
+      // add timeout reject
+      timer = setTimeout(() => {
+        hasFailed = true;
+        reject(ERR_RENDER_TIMEOUT);
+      }, renderTimeout);
 
       // get and resolve page HTML string when ready
       const resolveHTML = async () => {
@@ -92,48 +97,28 @@ class ChromeRender {
         })
       }
 
-
-      Page.domContentEventFired(async () => {
-        // should use ready
-        if (useReady) {
-          try {
-            await
-              Runtime.evaluate({
-                awaitPromise: true,
-                expression: `
-(function () {
-  return new Promise(function (resolve) {
-    window.chromeRenderReady = resolve;
-  });
-})();`,
-              });
-            //noinspection JSIgnoredPromiseFromCall
-            resolveHTML();
-          } catch (_) {
-          }
-          timer = setTimeout(() => {
-            hasFailed = true;
-            reject(ERR_RENDER_TIMEOUT);
-          }, this.renderTimeout);
-        } else {
-          //noinspection JSIgnoredPromiseFromCall
-          resolveHTML();
-        }
-      });
-
-
       // detect page load failed error
-      let requestId;
+      let firstRequestId;
       Network.requestWillBeSent((params) => {
-        requestId = params.requestId;
+        if (firstRequestId === undefined) {
+          firstRequestId = params.requestId;
+        }
       });
       Network.loadingFailed((params) => {
-        if (params.requestId === requestId) {
+        if (params.requestId === firstRequestId) {
           hasFailed = true;
-          reject(ERR_NETWORK_LOADING_FAILED);
+          reject(ERR_PAGE_LOAD_FAILED);
         }
       });
 
+      if (useReady) {
+        Page.addScriptToEvaluateOnLoad({
+          scriptSource: `
+window.chromeRenderReady = function(){
+  console.log('_CReady');
+}`,
+        });
+      }
 
       // inject script to evaluate when page on load
       if (typeof script === 'string') {
@@ -150,6 +135,15 @@ class ChromeRender {
         }, headers),
       });
 
+      if (useReady) {
+        Console.messageAdded((consoleMessage) => {
+          if (consoleMessage.message.text === '_CReady') {
+            resolveHTML();
+          }
+        });
+      } else {
+        Page.domContentEventFired(resolveHTML);
+      }
 
       // to go page
       await Page.navigate({

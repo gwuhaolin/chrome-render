@@ -3,70 +3,94 @@ const assert = require('assert');
 const ChromeRender = require('./index');
 
 describe('#ChromeRender', function () {
-  this.timeout(100000);
+  this.timeout(6000);
 
-  let chromeRender;
-
-  beforeEach(async () => {
-    // start a chrome
-    chromeRender = await ChromeRender.new();
-  });
-
-  afterEach(async () => {
-    // close all tab and exit chrome
+  it('#render()', async function () {
+    const chromeRender = await ChromeRender.new();
+    const html = await chromeRender.render({
+      url: 'https://gwuhaolin.github.io/redemo/',
+    });
+    console.log(html);
     await chromeRender.destroyRender();
   });
 
-  it('#render()', async () => {
-    return await chromeRender.render({
-      url: 'https://gwuhaolin.github.io/redemo/',
-    });
-  });
-
-  it('#render() set cookies', async () => {
-    return await chromeRender.render({
+  it('#render() set cookies', async function () {
+    const chromeRender = await ChromeRender.new();
+    const html = await chromeRender.render({
       url: 'https://gwuhaolin.github.io/reflv/',
       cookies: {
         'token': 'token value'
       },
     });
+    console.log(html);
+    await chromeRender.destroyRender();
   });
 
-  it('#render() set referrer', async () => {
-    return await chromeRender.render({
+  it('#render() set referrer', async function () {
+    const chromeRender = await ChromeRender.new();
+    const html = await chromeRender.render({
       url: 'http://qq.com',
       referrer: 'http://google.com'
     });
+    console.log(html);
+    await chromeRender.destroyRender();
   });
 
-  it('#render() cant load', async () => {
+  it('#render() should timeout', function (done) {
+    this.timeout(2000);
+    (async () => {
+      const chromeRender = await ChromeRender.new();
+      try {
+        await chromeRender.render({
+          url: 'http://qq.com',
+          useReady: true,
+          renderTimeout: 1000,
+        });
+      } catch (err) {
+        assert.equal(err.message, 'chrome-render timeout');
+        done();
+      }
+      await chromeRender.destroyRender();
+    })()
+  });
+
+  it('#render() cant load', async function () {
+    const chromeRender = await ChromeRender.new();
     try {
       await chromeRender.render({
         url: 'http://thispage.cantload.com',
       });
     } catch (err) {
-      assert.equal(err.message, 'network loading failed');
+      assert.equal(err.message, 'page load failed');
       return Promise.resolve(err);
     }
+    await chromeRender.destroyRender();
   });
 
-  it('#render() use ready', async () => {
+  it('#render() use ready', async function () {
+    const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({
-      url: 'http://localhost:3000',
+      url: 'https://gwuhaolin.github.io/reflv/live.html',
       useReady: true,
     });
     console.log(html);
+    await chromeRender.destroyRender();
   });
 
-  it('#render() inject script', async () => {
+  it('#render() inject script', async function () {
+    const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({
-      url: 'https://gwuhaolin.github.io/remd/',
-      script: `window.alert(document.title);`,
+      url: 'https://baidu.com',
+      useReady: true,
+      script: `window.chromeRenderReady && window.chromeRenderReady();`,
     });
     console.log(html);
+    await chromeRender.destroyRender();
   });
 
-  it('#render() render multi pages sames time', async () => {
+  it('#render() render multi pages sames time', async function () {
+    this.timeout(100000);
+    const chromeRender = await ChromeRender.new();
     const tasks = [];
     [
       'http://qq.com',
@@ -74,7 +98,6 @@ describe('#ChromeRender', function () {
       'https://taobao.com',
       'https://tmall.com',
       'https://ke.qq.com',
-      'https://news.qq.com',
       'http://tech.qq.com',
       'http://games.qq.com',
       'http://sports.qq.com',
@@ -83,7 +106,8 @@ describe('#ChromeRender', function () {
     ].forEach(url => {
       tasks.push(chromeRender.render({ url }));
     });
-    return await Promise.all(tasks);
+    await Promise.all(tasks);
+    await chromeRender.destroyRender();
   });
 
 });
