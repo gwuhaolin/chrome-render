@@ -3,7 +3,7 @@ const assert = require('assert');
 const ChromeRender = require('./index');
 
 describe('#ChromeRender', function () {
-  this.timeout(6000);
+  this.timeout(10000);
 
   it('#render()', async function () {
     const chromeRender = await ChromeRender.new();
