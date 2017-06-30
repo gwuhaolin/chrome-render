@@ -88,7 +88,7 @@ describe('#ChromeRender', function () {
     await chromeRender.destroyRender();
   });
 
-  it('#render() render multi pages sames time', async function () {
+  it('#render() render multi pages concurrent', async function () {
     this.timeout(100000);
     const chromeRender = await ChromeRender.new();
     const tasks = [];
@@ -97,7 +97,10 @@ describe('#ChromeRender', function () {
       'https://www.alibaba.com',
       'https://bing.com',
     ].forEach(url => {
-      tasks.push(chromeRender.render({ url }));
+      tasks.push(chromeRender.render({
+        url,
+        renderTimeout: 100000,
+      }));
     });
     await Promise.all(tasks);
     await chromeRender.destroyRender();
