@@ -114,9 +114,9 @@ class ChromeRender {
       if (useReady) {
         Page.addScriptToEvaluateOnLoad({
           scriptSource: `
-window.chromeRenderReady = function(){
-  console.log('_CReady');
-}`,
+Object.defineProperty(window, 'isPageReady', {
+  set: function() { console.log('P_R'); },
+})`,
         });
       }
 
@@ -137,7 +137,7 @@ window.chromeRenderReady = function(){
 
       if (useReady) {
         Console.messageAdded((consoleMessage) => {
-          if (consoleMessage.message.text === '_CReady') {
+          if (consoleMessage.message.text === 'P_R') {
             resolveHTML();
           }
         });

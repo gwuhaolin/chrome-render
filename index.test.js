@@ -82,7 +82,7 @@ describe('#ChromeRender', function () {
     const html = await chromeRender.render({
       url: 'https://baidu.com',
       useReady: true,
-      script: `window.chromeRenderReady && window.chromeRenderReady();`,
+      script: `window.isPageReady=1;`,
     });
     // console.log(html);
     await chromeRender.destroyRender();

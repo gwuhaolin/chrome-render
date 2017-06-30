@@ -29,7 +29,7 @@ see more demo in [unit test](./index.test.js)
 - `url`: `string` is required, web page's URL 
 - `cookies`: `object {cookieName:cookieValue}` is an option param. set HTTP cookies when request web page
 - `headers`: `object {headerName:headerValue}` is an option param. add HTTP headers when request web page
-- `useReady`: `boolean` whether use `window.chromeRenderReady()` to notify chrome-render page has ready. default is false chrome-render use `domContentEventFired` as page has ready.
+- `useReady`: `boolean` whether use `window.isPageReady=1` to notify chrome-render page has ready. default is false chrome-render use `domContentEventFired` as page has ready.
 - `script`: `string` is an option param. inject script source to evaluate when page on load
 - `renderTimeout`: `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
 
