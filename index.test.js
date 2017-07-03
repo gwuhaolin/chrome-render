@@ -80,7 +80,7 @@ describe('#ChromeRender', function () {
   it('#render() inject script', async function () {
     const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({
-      url: 'https://baidu.com',
+      url: 'https://bing.com',
       useReady: true,
       script: `window.isPageReady=1;`,
     });
