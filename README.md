@@ -4,8 +4,7 @@
 [![Dependency Status](https://david-dm.org/gwuhaolin/chrome-render.svg?style=flat-square)](https://npmjs.org/package/chrome-render)
 
 # chrome-render
-General server render base on chrome, render any web page render data in browser in server for SEO or other optimizes. 
-Base on awesome [Headless chrome](https://www.chromestatus.com/feature/5678767817097216).
+General server render base on [Headless chrome](https://www.chromestatus.com/feature/5678767817097216), render any web page render data in browser in server for SEO or other optimizes. 
 
 ## Use
 1. install it from npm by `npm i chrome-render`
