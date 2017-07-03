@@ -19,7 +19,7 @@ ChromeRender.new({}).then(async(chromeRender)=>{
     });
 });    
 ```
-see more demo in [unit test](./index.test.js)
+see more demo in [unit test](test/index.test.js)
 
 #### `ChromeRender.new()` method support options:
 - `maxTab`: `number` max tab chrome will open to render pages, default is no limit, `maxTab` used to avoid open to many tab lead to chrome crash. `ChromeRender` will create a tab poll to reuse tab for performance improve and resource reduce as open and close tab in chrome require time, like database connection poll. 
