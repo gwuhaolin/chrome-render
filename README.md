@@ -31,6 +31,7 @@ see more demo in [unit test](test/index.test.js)
 - `useReady`: `boolean` whether use `window.isPageReady=1` to notify chrome-render page has ready. default is false chrome-render use `domContentEventFired` as page has ready.
 - `script`: `string` is an option param. inject script source to evaluate when page on load
 - `renderTimeout`: `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
+- `deviceMetricsOverride`: `object` overrides the values of device screen dimensions for responsive websites, detail use see [here](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride)
 
 all request from chrome-render will take with a HTTP header `x-chrome-render:${version}`
  

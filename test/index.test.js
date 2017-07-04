@@ -2,6 +2,8 @@
 const assert = require('assert');
 const ChromeRender = require('../index');
 
+process.on('unhandledRejection', console.trace);
+
 describe('#ChromeRender', function () {
   this.timeout(10000);
 
@@ -103,6 +105,34 @@ describe('#ChromeRender', function () {
       }));
     });
     await Promise.all(tasks);
+    await chromeRender.destroyRender();
+  });
+
+  it('#render() use mobile to visit by set deviceMetricsOverride', async function () {
+    const chromeRender = await ChromeRender.new();
+
+    // mobile version
+    let html = await chromeRender.render({
+      url: 'https://www.google.com',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1',
+      },
+      deviceMetricsOverride: {
+        width: 100,
+        height: 200,
+        deviceScaleFactor: 0,
+        fitWindow: true,
+        mobile: true,
+      }
+    });
+    assert(html.indexOf('apple-touch-icon') > 0, `visit mobile version should has apple-touch-icon, html:${html}`);
+
+    // desktop version
+    html = await chromeRender.render({
+      url: 'https://www.google.com',
+    });
+    assert(html.indexOf('apple-touch-icon') === -1, `default is visit desktop version should not has apple-touch-icon, html:${html}`);
+
     await chromeRender.destroyRender();
   });
 

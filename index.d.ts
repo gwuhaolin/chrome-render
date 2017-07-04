@@ -41,6 +41,10 @@ export default class ChromeRender {
      * `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
      */
     renderTimeout?: number,
+    /**
+     * `object` Overrides the values of device screen dimensions, same as https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride
+     */
+    deviceMetricsOverride?: object,
   }): Promise<string>;
 
   /**

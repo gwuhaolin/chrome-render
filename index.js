@@ -23,11 +23,11 @@ class ChromeRender {
    * @return {Promise.<ChromeRender>}
    */
   static async new(params = {}) {
-    const { maxTab} = params;
+    const { maxTab } = params;
     const chromeRender = new ChromeRender();
     chromeRender.chromePoll = await ChromePoll.new({
       maxTab,
-      protocols: ['Page', 'DOM', 'Network', 'Console'],
+      protocols: ['Page', 'DOM', 'Network', 'Console', 'Emulation'],
     });
     return chromeRender;
   }
@@ -42,6 +42,7 @@ class ChromeRender {
    *      useReady: `boolean` whether use `window.chromeRenderReady()` to notify chrome-render page has ready. default is false chrome-render use `domContentEventFired` as page has ready.
    *      script: inject script to evaluate when page on load
    *      renderTimeout: `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
+   *      deviceMetricsOverride: `object` Overrides the values of device screen dimensions, same as https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride
    * }
    * @returns {Promise.<string>} page html string
    */
@@ -50,7 +51,7 @@ class ChromeRender {
     return await new Promise(async (resolve, reject) => {
       let hasFailed = false;
       let timer;
-      let { url, cookies, headers = {}, useReady, script, renderTimeout = 5000 } = params;
+      let { url, cookies, headers = {}, useReady, script, renderTimeout = 5000, deviceMetricsOverride } = params;
 
 
       // params assert
@@ -63,7 +64,7 @@ class ChromeRender {
 
       // open a tab
       client = await this.chromePoll.require();
-      const { Page, DOM, Console, Network, } = client.protocol;
+      const { Page, DOM, Console, Network, Emulation } = client.protocol;
 
       // add timeout reject
       timer = setTimeout(() => {
@@ -143,6 +144,12 @@ Object.defineProperty(window, 'isPageReady', {
         });
       } else {
         Page.domContentEventFired(resolveHTML);
+      }
+
+      // override device metrics
+      if (deviceMetricsOverride && typeof deviceMetricsOverride === 'object') {
+        // https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride
+        Emulation.setDeviceMetricsOverride(deviceMetricsOverride);
       }
 
       // to go page
