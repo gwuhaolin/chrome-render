@@ -26,6 +26,7 @@ A `chromeRender` instance can call `render` multi-times and concurrent for high 
 
 see more demo in [unit test](test/index.test.js)
 
+## API
 #### `ChromeRender.new()` method support options:
 - `maxTab`: `number` max tab chrome will open to render pages, default is no limit, `maxTab` used to avoid open to many tab lead to chrome crash. `ChromeRender` will create a tab poll to reuse tab for performance improve and resource reduce as open and close tab in chrome require time, like database connection poll. 
 
