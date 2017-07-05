@@ -8,6 +8,7 @@ General server render base on [Headless chrome](https://www.chromestatus.com/fea
 
 ## Use
 1. install it from npm by `npm i chrome-render`
+
 2. new a `ChromeRender` then use it to `render` a web page, a `ChromeRender` means a chrome.
 ```js
 const ChromeRender = require('chrome-render');
@@ -20,6 +21,7 @@ ChromeRender.new({}).then(async(chromeRender)=>{
 });    
 ```
 A `chromeRender` instance can call `render` multi-times and concurrent for high frequency use case.
+
 3. After you don't need chromeRender anymore, you should call `await chromeRender.destroyRender()` to kill chrome add release all resource.
 
 see more demo in [unit test](test/index.test.js)
