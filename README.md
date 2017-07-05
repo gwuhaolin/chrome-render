@@ -19,6 +19,9 @@ ChromeRender.new({}).then(async(chromeRender)=>{
     });
 });    
 ```
+A `chromeRender` instance can call `render` multi-times and concurrent for high frequency use case.
+3. After you don't need chromeRender anymore, you should call `await chromeRender.destroyRender()` to kill chrome add release all resource.
+
 see more demo in [unit test](test/index.test.js)
 
 #### `ChromeRender.new()` method support options:
