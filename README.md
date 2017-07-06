@@ -42,6 +42,7 @@ see more demo in [unit test](test/index.test.js)
 all request from chrome-render will take with a HTTP header `x-chrome-render:${version}`
  
 ## Friends
-- chrome-render dependent on [chrome-pool](https://github.com/gwuhaolin/chrome-pool) Headless chrome tabs manage pool.
+- chrome-render dependent on [chrome-pool](https://github.com/gwuhaolin/chrome-pool) headless chrome tabs manage pool.
+- [chrome-runner](https://github.com/gwuhaolin/chrome-runner) run chrome with nodejs in code.
 - [koa-chrome-render](https://github.com/gwuhaolin/koa-chrome-render) chrome-render middleware for koa.
 - [koa-seo](https://github.com/gwuhaolin/koa-seo) SEO middleware for koa base on chrome-render substitute for [prerender](https://prerender.io).
