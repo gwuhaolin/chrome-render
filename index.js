@@ -49,7 +49,7 @@ class ChromeRender {
   async render(params) {
     let client;
     return await new Promise(async (resolve, reject) => {
-      let hasFailed = false;
+      let hasReturn = false;
       let timer;
       let { url, cookies, headers = {}, useReady, script, renderTimeout = 5000, deviceMetricsOverride } = params;
 
@@ -57,7 +57,7 @@ class ChromeRender {
       // params assert
       // page url's requires
       if (!url) {
-        hasFailed = true;
+        hasReturn = true;
         return reject(ERR_REQUIRE_URL);
       }
 
@@ -68,19 +68,22 @@ class ChromeRender {
 
       // add timeout reject
       timer = setTimeout(() => {
-        hasFailed = true;
+        hasReturn = true;
         reject(ERR_RENDER_TIMEOUT);
+        clearTimeout(timer);
       }, renderTimeout);
 
       // get and resolve page HTML string when ready
       const resolveHTML = async () => {
-        if (hasFailed === false) {
+        if (hasReturn === false) {
           try {
             const dom = await DOM.getDocument();
             const ret = await DOM.getOuterHTML({ nodeId: dom.root.nodeId });
             resolve(ret.outerHTML);
           } catch (err) {
             reject(err);
+          } finally {
+            hasReturn = true;
           }
         }
         clearTimeout(timer);
@@ -107,7 +110,7 @@ class ChromeRender {
       });
       Network.loadingFailed((params) => {
         if (params.requestId === firstRequestId) {
-          hasFailed = true;
+          hasReturn = true;
           reject(ERR_PAGE_LOAD_FAILED);
         }
       });

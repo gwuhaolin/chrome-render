@@ -1,6 +1,6 @@
 {
   "name": "chrome-render",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "General server render base on chrome",
   "keywords": [
     "headless",
@@ -23,7 +23,7 @@
     "test": "mocha test"
   },
   "dependencies": {
-    "chrome-pool": "^1.0.11"
+    "chrome-pool": "^1.1.0"
   },
   "devDependencies": {
     "koa": "^2.2.0",
