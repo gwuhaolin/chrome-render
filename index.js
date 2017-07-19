@@ -18,16 +18,17 @@ class ChromeRender {
    * @param {object} params
    * {
    *  maxTab: `number` max tab chrome will open to render pages, default is no limit, `maxTab` used to avoid open to many tab lead to chrome crash.
-   *
+   *  chromeRunnerOptions: `object` same as chrome-runner's options, see [https://github.com/gwuhaolin/chrome-runner#options](chrome-runner options)
    * }
    * @return {Promise.<ChromeRender>}
    */
   static async new(params = {}) {
-    const { maxTab } = params;
+    const { maxTab, chromeRunnerOptions } = params;
     const chromeRender = new ChromeRender();
     chromeRender.chromePoll = await ChromePoll.new({
       maxTab,
       protocols: ['Page', 'DOM', 'Network', 'Console', 'Emulation'],
+      chromeRunnerOptions
     });
     return chromeRender;
   }
