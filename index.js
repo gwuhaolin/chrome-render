@@ -161,11 +161,11 @@ Object.defineProperty(window, 'isPageReady', {
         url,
         referrer: headers['referrer']
       });
-    }).then((html) => {
-      this.chromePoll.release(client.tabId);
+    }).then(async (html) => {
+      await this.chromePoll.release(client.tabId);
       return Promise.resolve(html);
-    }).catch((err) => {
-      this.chromePoll.release(client.tabId);
+    }).catch(async (err) => {
+      await this.chromePoll.release(client.tabId);
       return Promise.reject(err);
     });
   }
