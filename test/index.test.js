@@ -79,6 +79,31 @@ describe('#ChromeRender', function () {
     await chromeRender.destroyRender();
   });
 
+  it('#render() proper release', async function () {
+    const chromeRender = await ChromeRender.new({
+      maxTab: 8
+    });
+    await chromeRender.render({
+      url: 'https://gwuhaolin.github.io/redemo/?a=1',
+      useReady: true,
+      script: `setTimeout(function(){window.isPageReady = 1;}, 1000);`,
+      renderTimeout: 5000
+    });
+    await chromeRender.render({
+      url: 'https://gwuhaolin.github.io/redemo/?a=2',
+      useReady: true,
+      script: `setTimeout(function(){window.isPageReady = 1;}, 1000);`,
+      renderTimeout: 5000
+    });
+    await chromeRender.render({
+      url: 'https://gwuhaolin.github.io/redemo/?a=3',
+      useReady: true,
+      script: `setTimeout(function(){window.isPageReady = 1;}, 1000);`,
+      renderTimeout: 5000
+    });
+    await chromeRender.destroyRender();
+  });
+
   it('#render() inject script', async function () {
     const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({

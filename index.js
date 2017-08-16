@@ -78,13 +78,12 @@ class ChromeRender {
       const resolveHTML = async () => {
         if (hasReturn === false) {
           try {
+            hasReturn = true;
             const dom = await DOM.getDocument();
             const ret = await DOM.getOuterHTML({ nodeId: dom.root.nodeId });
             resolve(ret.outerHTML);
           } catch (err) {
             reject(err);
-          } finally {
-            hasReturn = true;
           }
         }
         clearTimeout(timer);
@@ -161,11 +160,11 @@ Object.defineProperty(window, 'isPageReady', {
         url,
         referrer: headers['referrer']
       });
-    }).then((html) => {
-      this.chromePoll.release(client.tabId);
+    }).then(async (html) => {
+      await this.chromePoll.release(client.tabId);
       return Promise.resolve(html);
-    }).catch((err) => {
-      this.chromePoll.release(client.tabId);
+    }).catch(async (err) => {
+      await this.chromePoll.release(client.tabId);
       return Promise.reject(err);
     });
   }
