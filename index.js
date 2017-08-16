@@ -78,13 +78,12 @@ class ChromeRender {
       const resolveHTML = async () => {
         if (hasReturn === false) {
           try {
+            hasReturn = true;
             const dom = await DOM.getDocument();
             const ret = await DOM.getOuterHTML({ nodeId: dom.root.nodeId });
             resolve(ret.outerHTML);
           } catch (err) {
             reject(err);
-          } finally {
-            hasReturn = true;
           }
         }
         clearTimeout(timer);
