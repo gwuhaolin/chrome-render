@@ -11,6 +11,7 @@ describe('#ChromeRender', function () {
     const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({
       url: 'https://gwuhaolin.github.io/redemo/',
+      renderTimeout: 2000,
     });
     // console.log(html);
     await chromeRender.destroyRender();
@@ -74,6 +75,7 @@ describe('#ChromeRender', function () {
     const html = await chromeRender.render({
       url: 'https://gwuhaolin.github.io/reflv/live.html',
       useReady: true,
+      renderTimeout: 5000
     });
     // console.log(html);
     await chromeRender.destroyRender();
@@ -86,14 +88,14 @@ describe('#ChromeRender', function () {
     await chromeRender.render({
       url: 'https://gwuhaolin.github.io/redemo/',
       useReady: true,
-      script: `setTimeout(function(){window.isPageReady = 1;}, 1000);`,
+      script: `setTimeout(function(){document.dispatchEvent(new Event('crPageRendered'))}, 1000);`,
       renderTimeout: 5000
     });
 
     await chromeRender.render({
       url: 'https://gwuhaolin.github.io/redemo/',
       useReady: true,
-      script: `setTimeout(function(){window.isPageReady = 1;}, 1000);`,
+      script: `setTimeout(function(){document.dispatchEvent(new Event('crPageRendered'))}, 1000);`,
       renderTimeout: 5000
     });
     await chromeRender.destroyRender();
@@ -104,7 +106,7 @@ describe('#ChromeRender', function () {
     const html = await chromeRender.render({
       url: 'https://bing.com',
       useReady: true,
-      script: `window.isPageReady=1;`,
+      script: `setTimeout(function(){document.dispatchEvent(new Event('crPageRendered'))}, 1000);`,
     });
     // console.log(html);
     await chromeRender.destroyRender();
