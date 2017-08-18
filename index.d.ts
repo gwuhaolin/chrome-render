@@ -45,6 +45,10 @@ export default class ChromeRender {
      * `object` Overrides the values of device screen dimensions, same as https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride
      */
     deviceMetricsOverride?: object,
+    /**
+     * `boolean` if `true` after render chrome instance will navigate to `about:blank` to free resources. default is true. setting to `false` may increase page load speed when rendering the same website.
+     */
+    clearPool?: boolean,
   }): Promise<string>;
 
   /**

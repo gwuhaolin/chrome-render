@@ -39,6 +39,7 @@ see more demo in [unit test](test/index.test.js)
 - `script`: `string` is an option param. inject script source to evaluate when page on load
 - `renderTimeout`: `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
 - `deviceMetricsOverride`: `object` overrides the values of device screen dimensions for responsive websites, detail use see [here](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride)
+- `clearPool`: `boolean` if `true` after render chrome instance will navigate to `about:blank` to free resources. default is true. setting to `false` may increase page load speed when rendering the same website.
 
 all request from chrome-render will take with a HTTP header `x-chrome-render:${version}`
  
