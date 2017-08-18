@@ -124,6 +124,7 @@ class ChromeRender {
           // define window.isPageReady to listen page ready event
           // wait for page ready event to resolveHTML
           if (useReady === true) {
+            // Page.frameNavigated may be fired more than one times
             useReady = false;
             Runtime.evaluate({
               awaitPromise: true,
