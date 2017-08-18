@@ -73,7 +73,7 @@ class ChromeRender {
       const resolveHTML = async () => {
         try {
           const dom = await DOM.getDocument();
-          const ret = await DOM.getOuterHTML({nodeId: dom.root.nodeId});
+          const ret = await DOM.getOuterHTML({ nodeId: dom.root.nodeId });
           resolve(ret.outerHTML);
         } catch (err) {
           reject(err);
@@ -105,15 +105,6 @@ class ChromeRender {
         }
       });
 
-      if (useReady) {
-        Page.addScriptToEvaluateOnLoad({
-          scriptSource: `
-Object.defineProperty(window, 'isPageReady', {
-  set: function(value) { this._crPageRendered = true; document.dispatchEvent(new Event('crPageRendered')); },
-})`,
-        });
-      }
-
       // inject script to evaluate when page on load
       if (typeof script === 'string') {
         Page.addScriptToEvaluateOnLoad({
@@ -129,27 +120,27 @@ Object.defineProperty(window, 'isPageReady', {
       });
 
       if (useReady) {
-        Page.domContentEventFired(async () =>{
-          const doc = await DOM.getDocument();
-          if (doc.root && doc.root.baseURL !== 'about:blank') {
-            await Runtime.evaluate({
-              awaitPromise: true,
-              returnByValue: true,
-              expression: `
+        // define window.isPageReady to listen page ready event
+        Page.addScriptToEvaluateOnNewDocument({
+          source: `
+Object.defineProperty(window, 'isPageReady', {
+  set: function(value) { document.dispatchEvent(new Event('_crPageRendered')) },
+})`,
+        });
+        Page.frameNavigated(() => {
+          // wait for page ready event to resolveHTML
+          Runtime.evaluate({
+            awaitPromise: true,
+            returnByValue: true,
+            expression: `
 new Promise((fulfill, reject) => {
-  if (window._crPageRendered) {
-    fulfill();
-  }
-  document.addEventListener('crPageRendered', fulfill, {
+  document.addEventListener('_crPageRendered', fulfill, {
     once: true
   });
 })`
-            }).then(() => {
-              resolveHTML();
-            }).catch((ex) => {
-              // trap for about:blanks
-            });
-          }
+          }).then(resolveHTML).catch((err) => {
+            console.error(err);
+          });
         });
       } else {
         Page.domContentEventFired(resolveHTML);
@@ -166,14 +157,11 @@ new Promise((fulfill, reject) => {
         url,
         referrer: headers['referrer']
       });
-
-
-      // await Console.clearMessages();
-    }).then(async (html) => {
-      await this.chromePoll.release(client.tabId);
+    }).then((html) => {
+      this.chromePoll.release(client.tabId);
       return Promise.resolve(html);
-    }).catch(async (err) => {
-      await this.chromePoll.release(client.tabId);
+    }).catch((err) => {
+      this.chromePoll.release(client.tabId);
       return Promise.reject(err);
     });
   }
