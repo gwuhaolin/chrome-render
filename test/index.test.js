@@ -11,8 +11,9 @@ describe('#ChromeRender', function () {
     const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({
       url: 'https://gwuhaolin.github.io/redemo/',
+      renderTimeout: 2000,
     });
-    // console.log(html);
+    console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -24,7 +25,7 @@ describe('#ChromeRender', function () {
         'token': 'token value'
       },
     });
-    // console.log(html);
+    console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -34,7 +35,7 @@ describe('#ChromeRender', function () {
       url: 'http://google.com',
       referrer: 'http://baidu.com'
     });
-    // console.log(html);
+    console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -43,11 +44,12 @@ describe('#ChromeRender', function () {
     (async () => {
       const chromeRender = await ChromeRender.new();
       try {
-        await chromeRender.render({
+        const html = await chromeRender.render({
           url: 'http://qq.com',
           useReady: true,
           renderTimeout: 1000,
         });
+        console.log(html);
       } catch (err) {
         assert.equal(err.message, 'chrome-render timeout');
         done();
@@ -70,12 +72,36 @@ describe('#ChromeRender', function () {
   });
 
   it('#render() use ready', async function () {
+    this.timeout(20000);
     const chromeRender = await ChromeRender.new();
     const html = await chromeRender.render({
       url: 'https://gwuhaolin.github.io/reflv/live.html',
       useReady: true,
+      renderTimeout: 5000
     });
-    // console.log(html);
+    console.log(html);
+    assert(html.indexOf('data-reactroot=') > 0, 'should resolve after react render html out');
+    await chromeRender.destroyRender();
+  });
+
+  it('#render() proper release', async function () {
+    this.timeout(15000);
+    const chromeRender = await ChromeRender.new({
+      maxTab: 8
+    });
+    await chromeRender.render({
+      url: 'https://gwuhaolin.github.io/redemo/',
+      useReady: true,
+      script: `setTimeout(function(){ window.isPageReady=1 }, 1000);`,
+      renderTimeout: 5000
+    });
+
+    await chromeRender.render({
+      url: 'https://gwuhaolin.github.io/redemo/',
+      useReady: true,
+      script: `setTimeout(function(){ window.isPageReady=1 }, 1000);`,
+      renderTimeout: 5000
+    });
     await chromeRender.destroyRender();
   });
 
@@ -109,9 +135,9 @@ describe('#ChromeRender', function () {
     const html = await chromeRender.render({
       url: 'https://bing.com',
       useReady: true,
-      script: `window.isPageReady=1;`,
+      script: `setTimeout(function(){ window.isPageReady=1 }, 1000);`,
     });
-    // console.log(html);
+    console.log(html);
     await chromeRender.destroyRender();
   });
 

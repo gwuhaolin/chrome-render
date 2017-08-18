@@ -27,7 +27,7 @@ class ChromeRender {
     const chromeRender = new ChromeRender();
     chromeRender.chromePoll = await ChromePoll.new({
       maxTab,
-      protocols: ['Page', 'DOM', 'Network', 'Console', 'Emulation'],
+      protocols: ['Page', 'DOM', 'Network', 'Runtime', 'Emulation'],
       chromeRunnerOptions
     });
     return chromeRender;
@@ -50,45 +50,36 @@ class ChromeRender {
   async render(params) {
     let client;
     return await new Promise(async (resolve, reject) => {
-      let hasReturn = false;
       let timer;
       let { url, cookies, headers = {}, useReady, script, renderTimeout = 5000, deviceMetricsOverride } = params;
-
 
       // params assert
       // page url's requires
       if (!url) {
-        hasReturn = true;
         return reject(ERR_REQUIRE_URL);
       }
 
-
       // open a tab
       client = await this.chromePoll.require();
-      const { Page, DOM, Console, Network, Emulation } = client.protocol;
+      const { Page, DOM, Network, Emulation, Runtime } = client.protocol;
 
       // add timeout reject
       timer = setTimeout(() => {
-        hasReturn = true;
         reject(ERR_RENDER_TIMEOUT);
         clearTimeout(timer);
       }, renderTimeout);
 
       // get and resolve page HTML string when ready
       const resolveHTML = async () => {
-        if (hasReturn === false) {
-          try {
-            hasReturn = true;
-            const dom = await DOM.getDocument();
-            const ret = await DOM.getOuterHTML({ nodeId: dom.root.nodeId });
-            resolve(ret.outerHTML);
-          } catch (err) {
-            reject(err);
-          }
+        try {
+          const dom = await DOM.getDocument();
+          const ret = await DOM.getOuterHTML({ nodeId: dom.root.nodeId });
+          resolve(ret.outerHTML);
+        } catch (err) {
+          reject(err);
         }
         clearTimeout(timer);
       };
-
 
       // inject cookies
       if (cookies && typeof cookies === 'object') {
@@ -110,19 +101,9 @@ class ChromeRender {
       });
       Network.loadingFailed((params) => {
         if (params.requestId === firstRequestId) {
-          hasReturn = true;
           reject(ERR_PAGE_LOAD_FAILED);
         }
       });
-
-      if (useReady) {
-        Page.addScriptToEvaluateOnLoad({
-          scriptSource: `
-Object.defineProperty(window, 'isPageReady', {
-  set: function() { console.log('P_R'); },
-})`,
-        });
-      }
 
       // inject script to evaluate when page on load
       if (typeof script === 'string') {
@@ -131,7 +112,6 @@ Object.defineProperty(window, 'isPageReady', {
         });
       }
 
-
       // detect request from chrome-render
       Network.setExtraHTTPHeaders({
         headers: Object.assign({
@@ -139,10 +119,26 @@ Object.defineProperty(window, 'isPageReady', {
         }, headers),
       });
 
-      if (useReady) {
-        Console.messageAdded((consoleMessage) => {
-          if (consoleMessage.message.text === 'P_R') {
-            resolveHTML();
+      if (useReady === true) {
+        Page.frameNavigated(() => {
+          // define window.isPageReady to listen page ready event
+          // wait for page ready event to resolveHTML
+          if (useReady === true) {
+            // Page.frameNavigated may be fired more than one times
+            useReady = false;
+            Runtime.evaluate({
+              awaitPromise: true,
+              silent: true,
+              expression: `
+new Promise((fulfill) => {
+  Object.defineProperty(window, 'isPageReady', {
+    set: function(value) { document.dispatchEvent(new Event('_crPageRendered')) },
+  });
+  document.addEventListener('_crPageRendered', fulfill, {
+    once: true
+  });
+})`
+            }).then(resolveHTML);
           }
         });
       } else {
@@ -160,11 +156,11 @@ Object.defineProperty(window, 'isPageReady', {
         url,
         referrer: headers['referrer']
       });
-    }).then(async (html) => {
-      await this.chromePoll.release(client.tabId);
+    }).then((html) => {
+      this.chromePoll.release(client.tabId);
       return Promise.resolve(html);
-    }).catch(async (err) => {
-      await this.chromePoll.release(client.tabId);
+    }).catch((err) => {
+      this.chromePoll.release(client.tabId);
       return Promise.reject(err);
     });
   }
