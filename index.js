@@ -119,28 +119,26 @@ class ChromeRender {
         }, headers),
       });
 
-      if (useReady) {
-        // define window.isPageReady to listen page ready event
-        Page.addScriptToEvaluateOnNewDocument({
-          source: `
-Object.defineProperty(window, 'isPageReady', {
-  set: function(value) { document.dispatchEvent(new Event('_crPageRendered')) },
-})`,
-        });
+      if (useReady === true) {
         Page.frameNavigated(() => {
+          // define window.isPageReady to listen page ready event
           // wait for page ready event to resolveHTML
-          Runtime.evaluate({
-            awaitPromise: true,
-            returnByValue: true,
-            expression: `
-new Promise((fulfill, reject) => {
+          if (useReady === true) {
+            useReady = false;
+            Runtime.evaluate({
+              awaitPromise: true,
+              silent: true,
+              expression: `
+new Promise((fulfill) => {
+  Object.defineProperty(window, 'isPageReady', {
+    set: function(value) { document.dispatchEvent(new Event('_crPageRendered')) },
+  });
   document.addEventListener('_crPageRendered', fulfill, {
     once: true
   });
 })`
-          }).then(resolveHTML).catch((err) => {
-            console.error(err);
-          });
+            }).then(resolveHTML);
+          }
         });
       } else {
         Page.domContentEventFired(resolveHTML);

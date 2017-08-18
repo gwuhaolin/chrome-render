@@ -25,7 +25,7 @@ describe('#ChromeRender', function () {
         'token': 'token value'
       },
     });
-    // console.log(html);
+    console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -35,7 +35,7 @@ describe('#ChromeRender', function () {
       url: 'http://google.com',
       referrer: 'http://baidu.com'
     });
-    // console.log(html);
+    console.log(html);
     await chromeRender.destroyRender();
   });
 
@@ -44,11 +44,12 @@ describe('#ChromeRender', function () {
     (async () => {
       const chromeRender = await ChromeRender.new();
       try {
-        await chromeRender.render({
+        const html = await chromeRender.render({
           url: 'http://qq.com',
           useReady: true,
           renderTimeout: 1000,
         });
+        console.log(html);
       } catch (err) {
         assert.equal(err.message, 'chrome-render timeout');
         done();
@@ -79,6 +80,7 @@ describe('#ChromeRender', function () {
       renderTimeout: 5000
     });
     console.log(html);
+    assert(html.indexOf('data-reactroot=') > 0, 'should resolve after react render html out');
     await chromeRender.destroyRender();
   });
 
