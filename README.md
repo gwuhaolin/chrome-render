@@ -35,7 +35,7 @@ see more demo in [unit test](test/index.test.js)
 - `url`: `string` is required, web page's URL 
 - `cookies`: `object {cookieName:cookieValue}` is an option param. set HTTP cookies when request web page
 - `headers`: `object {headerName:headerValue}` is an option param. add HTTP headers when request web page
-- `useReady`: `boolean` whether use `document.dispatchEvent(new Event('crPageRendered'))` or `window.isPageReady=1` to notify chrome-render page is ready. default is false chrome-render use `domContentEventFired` as page has ready.
+- `useReady`: `boolean` whether use `window.isPageReady=1` to notify chrome-render page is ready. default is false chrome-render use `domContentEventFired` as page has ready.
 - `script`: `string` is an option param. inject script source to evaluate when page on load
 - `renderTimeout`: `number` in ms, `render()` will throw error if html string can't be resolved after `renderTimeout`, default is 5000ms.
 - `deviceMetricsOverride`: `object` overrides the values of device screen dimensions for responsive websites, detail use see [here](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride)
