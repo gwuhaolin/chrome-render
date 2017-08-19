@@ -48,7 +48,7 @@ export default class ChromeRender {
     /**
      * `boolean` if `true` after render chrome instance will navigate to `about:blank` to free resources. default is true. setting to `false` may increase page load speed when rendering the same website.
      */
-    clearPool?: boolean,
+    clearTab?: boolean,
   }): Promise<string>;
 
   /**
