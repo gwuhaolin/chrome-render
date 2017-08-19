@@ -157,10 +157,10 @@ new Promise((fulfill) => {
         referrer: headers['referrer']
       });
     }).then((html) => {
-      this.chromePoll.release(client.tabId);
+      this.chromePoll.release(client.tabId, params.clearPool);
       return Promise.resolve(html);
     }).catch((err) => {
-      this.chromePoll.release(client.tabId);
+      this.chromePoll.release(client.tabId, params.clearPool);
       return Promise.reject(err);
     });
   }
