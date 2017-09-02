@@ -20,7 +20,8 @@ ChromeRender.new({}).then(async(chromeRender)=>{
     });
 });    
 ```
-A `chromeRender` instance can call `render` multi-times and concurrent for high frequency use case.
+> A `chromeRender` instance can call `render` multi-times and concurrent for high frequency use case.
+> `chromeRender` will manage a tabs pool to `render` multi-pages concurrent.
 
 3. After you don't need chromeRender anymore, you should call `await chromeRender.destroyRender()` to kill chrome add release all resource.
 
@@ -29,7 +30,7 @@ see more demo in [unit test](test/index.test.js)
 ## API
 #### `ChromeRender.new()` method support options:
 - `maxTab`: `number` max tab chrome will open to render pages, default is no limit, `maxTab` used to avoid open to many tab lead to chrome crash. `ChromeRender` will create a tab poll to reuse tab for performance improve and resource reduce as open and close tab in chrome require time, like database connection poll. 
-- `chromeRunnerOptions`: `object` same as chrome-runner's options, can config chrome's startup options, detail see [https://github.com/gwuhaolin/chrome-runner#options](chrome-runner options)
+- `chromeRunnerOptions`: `object` same as chrome-runner's options, can config chrome's startup options, detail see [chrome-runner options](https://github.com/gwuhaolin/chrome-runner#options)
 
 #### `chromeRender.render()` method support options:
 - `url`: `string` is required, web page's URL 
@@ -41,7 +42,7 @@ see more demo in [unit test](test/index.test.js)
 - `deviceMetricsOverride`: `object` overrides the values of device screen dimensions for responsive websites, detail use see [here](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setDeviceMetricsOverride)
 - `clearTab`: `boolean` if `true` after render chrome instance will navigate to `about:blank` to free resources. default is `true`. setting to `false` may increase page load speed when rendering the same website.
 
-all request from chrome-render will take with a HTTP header `x-chrome-render:${version}`
+> all request from chrome-render will take with a HTTP header `x-chrome-render:${version}`
  
 ## Friends
 - chrome-render dependent on [chrome-pool](https://github.com/gwuhaolin/chrome-pool) headless chrome tabs manage pool.
