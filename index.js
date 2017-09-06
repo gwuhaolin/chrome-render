@@ -138,7 +138,8 @@ new Promise((fulfill) => {
     once: true
   });
 })`
-            }).then(resolveHTML);
+            }).then(resolveHTML)
+              .catch(reject);
           }
         });
       } else {
