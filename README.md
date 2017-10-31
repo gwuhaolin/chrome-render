@@ -15,14 +15,20 @@ High-performance and universal server render base on [Headless chrome](https://w
 
 2. new a `ChromeRender` then use it to `render` a web page, a `ChromeRender` means a chrome.
 ```js
-const ChromeRender = require('chrome-render');
-// ChromeRender.new() return a Promise, you can use async function in this way:
-// const chromeRender = await ChromeRender.new(); 
-ChromeRender.new({}).then(async(chromeRender)=>{
-    const htmlString = await chromeRender.render({
-       url: 'http://qq.com',
-    });
-});    
+const ChromeRender = require('chrome-render')
+
+const run = async () => {
+  const chromeRender = await ChromeRender.new()
+  const html = await chromeRender.render({
+    url: 'http://example.com',
+  })
+
+  console.log(html)
+
+  await chromeRender.destroyRender()
+}
+
+run()
 ```
 > A `chromeRender` instance can call `render` multi-times and concurrent for high frequency use case.
 > `chromeRender` will manage a tabs pool to `render` multi-pages concurrent.
