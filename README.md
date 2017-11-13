@@ -6,10 +6,6 @@
 # chrome-render
 High-performance and universal server render base on [Headless chrome](https://www.chromestatus.com/feature/5678767817097216), render any SPA(render data in browser) in server for [SEO](https://github.com/gwuhaolin/koa-seo) or [other optimizes](https://github.com/gwuhaolin/koa-chrome-render). 
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/3bvxELAxnq8r4wheFyRkED8U/gwuhaolin/chrome-render'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/3bvxELAxnq8r4wheFyRkED8U/gwuhaolin/chrome-render.svg' />
-</a>
-
 ## Use
 1. install it from npm by `npm i chrome-render`
 
